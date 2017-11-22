@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:10.1
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Upopefelo947
+      - MYSQL_USER=owncloud
+      - MYSQL_PASSWORD=Upopefelo947
+      - MYSQL_DATABASE=owncloud
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - 127.0.0.1:3360:3306
+
+  app:
+    image: owncloud:8.2
+    restart: always
+
+    ports:
+      - 9991:80
+      - 9992:443
+    volumes:
+      - ./config:/var/www/html/config
+      - ./apps:/var/www/html/apps
+      - /mnt/netapp/owncloud:/var/www/html/data
+
+volumes:
+  dbdata:
